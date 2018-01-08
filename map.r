@@ -8,15 +8,32 @@ user_action <- dbGetQuery(conn,query)
 
 summary(as.numeric(user_action$behavior_type))
 
-library(ggplot2)
+#library(ggplot2)
 # ggplot(user_action, aes(as.numeric(behavior_type)))+geom_histogram()
 
 temp <- subset(user_action, as.numeric(behavior_type)==4)
 count <- sort(table(temp$item_category), decreasing=T)
 result <- as.data.frame(count[1:10])
+
 #ggplot(result, aes(Var1, Freq, col=factor(Var1)))+geom_point()
+
 mouth <- substr(user_action$visit_date,6,7)
 user_action <- cbind(user_action, mouth)
-ggplot(user_action,aes(as.numeric(behavior_type), col=factor(mouth)))+geom_histogram()+facet_grid(.~mouth)
+
+# ggplot(user_action,aes(as.numeric(behavior_type), col=factor(mouth)))+geom_histogram()+facet_grid(.~mouth)
+
+library(recharts)
+rel <- as.data.frame(table(temp$province))
+provinces <- rel$Var1
+# print(provinces)
+x = c()
+for(n in provinces) {
+x[length(x)+1] = nrow(subset(temp,(province==n)))
+}
+# print(x)
+mapData <- data.frame(province = rel$Var1,count=x,stringAsFactors=F)
+print(mapData)
+eMap(mapData, namevar=~province, datavar=~count)
+
 
 
