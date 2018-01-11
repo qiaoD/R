@@ -6,7 +6,7 @@ query = 'select * from user_action LIMIT 100000'
 
 user_action <- dbGetQuery(conn,query)
 
-summary(as.numeric(user_action$behavior_type))
+#summary(as.numeric(user_action$behavior_type))
 
 #library(ggplot2)
 # ggplot(user_action, aes(as.numeric(behavior_type)))+geom_histogram()
@@ -32,8 +32,8 @@ x[length(x)+1] = nrow(subset(temp,(province==n)))
 }
 # print(x)
 mapData <- data.frame(province = rel$Var1,count=x,stringAsFactors=F)
-print(mapData)
-eMap(mapData, namevar=~province, datavar=~count)
-
+#print(mapData)
+e1 = eMap(mapData, namevar=~province, datavar=~count)
+htmlwidgets::saveWidget(e1, 'e1.html')
 
 
