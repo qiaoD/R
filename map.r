@@ -34,6 +34,7 @@ x[length(x)+1] = nrow(subset(temp,(province==n)))
 mapData <- data.frame(province = rel$Var1,count=x,stringAsFactors=F)
 #print(mapData)
 e1 = eMap(mapData, namevar=~province, datavar=~count)
+# because the map can't be showed when I use cmd,so I save the map as a .html file named el.html
 htmlwidgets::saveWidget(e1, 'e1.html')
 
 
